@@ -5,7 +5,7 @@
 				"type":"cube", 
 				"script":"hide_show_object.cs", 
 				"position":{
-	                "x": 0,
+	                "x": 1,
 	                "y": 0,
 	                "z": 0
 	            }
@@ -15,7 +15,7 @@
 				"type":"sphere", 
 				"script":"hide_other_objects.cs", 
 				"position":{
-	                "x": 0,
+	                "x": 2,
 	                "y": 0,
 	                "z": 0
 	            }

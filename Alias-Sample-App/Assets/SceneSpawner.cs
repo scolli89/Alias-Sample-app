@@ -6,23 +6,16 @@ using System.IO;
 
 public class SceneSpawner : MonoBehaviour
 {
+
     Dictionary<string, GameObject> spawnDictionary;
     public string pathToSpawnDirectory = "/Prefabs/SpawnableObjects";
     public string pathToJson = "/scene_contents.json";
     public TextAsset jsonFile;
 
-    [System.Serializable]
-    public class Entry
-    {
-        public string key;
-        public GameObject value;
 
-    }
     public List<Entry> entries;
     List<GameObjectToSpawn> gameObjectsToSpawn;
-
-
-
+    public AudioClip sound;
 
 
 
@@ -35,11 +28,6 @@ public class SceneSpawner : MonoBehaviour
         BuildGameScene();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
     void FillDictionary()
     {
         ///<TODO>
@@ -51,7 +39,7 @@ public class SceneSpawner : MonoBehaviour
 
         foreach (Entry entry in entries)
         {
-            spawnDictionary.Add(entry.key, entry.value);
+            spawnDictionary.Add(entry.key, entry.go);
         }
     }
 
@@ -74,9 +62,46 @@ public class SceneSpawner : MonoBehaviour
     }
     void BuildGameScene()
     {
+        GameObject clickManagerGO = new GameObject();
+        ClickableManager clickableManager = clickManagerGO.AddComponent<ClickableManager>();
+        clickableManager.name = "ClickableManager";
+
         foreach (GameObjectToSpawn go in gameObjectsToSpawn)
         {
-            GameObject g = Instantiate(spawnDictionary[go.type], go.position, Quaternion.identity);
+            GameObject clickGo = Instantiate(spawnDictionary[go.type], go.position, Quaternion.identity);
+            Clickable click;
+            // Clickable click = (new GameObject()).AddComponent<Clickable>();
+            switch (go.script)
+            {
+                case ("hide_show_object.cs"):
+                    Debug.Log("Hide show");
+                    click = clickGo.AddComponent<hide_show_object>();
+                    break;
+                case ("hide_other_objects.cs"):
+                    Debug.Log("Hide other");
+                    click = clickGo.AddComponent<hide_other_objects>();
+                    break;
+                case ("sound.cs"):
+                    Debug.Log("Sound");
+                    AudioSource audio = clickGo.AddComponent<AudioSource>();
+                    audio.clip = sound;
+                    click = clickGo.AddComponent<sound>();
+                    break;
+                default:
+                    Debug.Log("no script added");
+                    click = null;
+                    break;
+            }
+
+            if (click == null)
+            {
+                continue;
+            }
+
+            click.manager = clickableManager;
+            clickableManager.AddEntry(clickGo.name, click);
+
+
 
 
         }

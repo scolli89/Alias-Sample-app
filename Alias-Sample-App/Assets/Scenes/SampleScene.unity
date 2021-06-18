@@ -330,11 +330,15 @@ MonoBehaviour:
   jsonFile: {fileID: 4900000, guid: 80702122545c3ae4994457e68f09c2b2, type: 3}
   entries:
   - key: cube
-    value: {fileID: 3825175204772431307, guid: 8da3e69a78116e24898ef6e14e3b4af7, type: 3}
+    go: {fileID: 3825175204772431307, guid: 8da3e69a78116e24898ef6e14e3b4af7, type: 3}
+    script: {fileID: 0}
   - key: capsule
-    value: {fileID: 3523516975261218050, guid: e22a9cd9443e0d14286de8006a4f8fec, type: 3}
+    go: {fileID: 3523516975261218050, guid: e22a9cd9443e0d14286de8006a4f8fec, type: 3}
+    script: {fileID: 0}
   - key: sphere
-    value: {fileID: 2613735559711636418, guid: 92e51acf09e92e848816197ce7757906, type: 3}
+    go: {fileID: 2613735559711636418, guid: 92e51acf09e92e848816197ce7757906, type: 3}
+    script: {fileID: 0}
+  sound: {fileID: 8300000, guid: 908040caa6312854fa177d42220dcd8a, type: 3}
 --- !u!4 &1765484066
 Transform:
   m_ObjectHideFlags: 0

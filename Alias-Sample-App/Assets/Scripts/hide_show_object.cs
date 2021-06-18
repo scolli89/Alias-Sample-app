@@ -2,17 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class hide_show_object : MonoBehaviour
+public class hide_show_object : Clickable
 {
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
+    }
+    public override void Clicked()
+    {
+        ToggleMesh();
     }
 }
