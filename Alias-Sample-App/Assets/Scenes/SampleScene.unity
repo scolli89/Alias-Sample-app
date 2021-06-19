@@ -322,12 +322,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1765484064}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b5d5e2ee33bf6894b98573cb0c197b55, type: 3}
+  m_Script: {fileID: 11500000, guid: 113408e5951545146b293ace69775396, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pathToSpawnDirectory: /Prefabs/SpawnableObjects
-  pathToJson: /scene_contents.json
-  jsonFile: {fileID: 4900000, guid: 80702122545c3ae4994457e68f09c2b2, type: 3}
   entries:
   - key: cube
     go: {fileID: 3825175204772431307, guid: 8da3e69a78116e24898ef6e14e3b4af7, type: 3}
@@ -338,7 +335,10 @@ MonoBehaviour:
   - key: sphere
     go: {fileID: 2613735559711636418, guid: 92e51acf09e92e848816197ce7757906, type: 3}
     script: {fileID: 0}
-  sound: {fileID: 8300000, guid: 908040caa6312854fa177d42220dcd8a, type: 3}
+  soundClip: {fileID: 8300000, guid: 908040caa6312854fa177d42220dcd8a, type: 3}
+  jsonFile: {fileID: 4900000, guid: 80702122545c3ae4994457e68f09c2b2, type: 3}
+  soundPlaysAlways: 1
+  destroyAfterBuild: 1
 --- !u!4 &1765484066
 Transform:
   m_ObjectHideFlags: 0

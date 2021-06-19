@@ -6,19 +6,45 @@ using System.IO;
 
 public class SceneSpawner : MonoBehaviour
 {
+    ///<summary>
+    /*
+    The sceneSpawner class is attacjed to a gameobject, given reference to the json file in the asset folder, 
+    and given the list of entries into the spawnDictionary of the name of the prefab, as seen in the scene contents json, and the assoicated default object prefab.
+
+    This class has several methods but all are called concurrently from the Start method. it was seperated for redability purposes. 
+    Fill Dictionary populates the dictionary with the entries list so that quick look up of the key word and prefab pair can occur when instantiating the gameobjects.
+
+    Read Json parses the provided json file and fills a list of GameObjectTospawn classes. These classes are just data holders for the list and are used to build the gameObjects later. 
+
+    BuildGameScene iterates through the list of gameObjectToSpawns building the gameObject according to the provided data. 
+    
+    The Finish method destroys this object in the scene. It is reliant on the destroyAfterBuild variable to be true. 
+    */
+    ///</summary>
+
+    ///<notes>
+    /* 
+    The soudPlaysAlawys = true; It is assumed that the intended functionality of the sound.cs class is to play the sound whether visible or not. 
+    This variarble would change that functionality if the inteded effect was for the object to not play the sound when not visible. 
+
+    The destroyAfterBuild = true. This class doesn't do anything once everything is built. It makes to remove it from the scene. However, this functionality can be toggled. 
+    */
+    ///</notes>
+
+
+
+    [Space]
+    [Header("Building Scene GameObjects")]
 
     Dictionary<string, GameObject> spawnDictionary;
-    public string pathToSpawnDirectory = "/Prefabs/SpawnableObjects";
-    public string pathToJson = "/scene_contents.json";
-    public TextAsset jsonFile;
-
-
-    public List<Entry> entries;
     List<GameObjectToSpawn> gameObjectsToSpawn;
-    public AudioClip sound;
-
-
-
+    public List<Entry> entries;
+    public AudioClip soundClip;
+    public TextAsset jsonFile;
+    [Space]
+    [Header("Assumption Variables")]
+    public bool soundPlaysAlways = true;
+    public bool destroyAfterBuild = true;
 
     void Start()
     {
@@ -26,17 +52,11 @@ public class SceneSpawner : MonoBehaviour
         FillDictionary();
         ReadJSON();
         BuildGameScene();
+        Finish();
     }
 
     void FillDictionary()
     {
-        ///<TODO>
-        /// This is a temparary solution.
-        /// I want to change it from loading from the inspector to 
-        /// reading the assets folder of the names in the file 
-        ///then making a dictionary out of the names of files and the files
-        ///</TODO>
-
         foreach (Entry entry in entries)
         {
             spawnDictionary.Add(entry.key, entry.go);
@@ -57,8 +77,6 @@ public class SceneSpawner : MonoBehaviour
             go.position = new Vector3(game_object.position.x, game_object.position.y, game_object.position.z);
             gameObjectsToSpawn.Add(go);
         }
-
-
     }
     void BuildGameScene()
     {
@@ -84,8 +102,10 @@ public class SceneSpawner : MonoBehaviour
                 case ("sound.cs"):
                     Debug.Log("Sound");
                     AudioSource audio = clickGo.AddComponent<AudioSource>();
-                    audio.clip = sound;
-                    click = clickGo.AddComponent<sound>();
+                    audio.clip = soundClip;
+                    sound soundScript = clickGo.AddComponent<sound>();
+                    soundScript.soundPlaysAlways = soundPlaysAlways;
+                    click = (Clickable)soundScript;
                     break;
                 default:
                     Debug.Log("no script added");
@@ -106,6 +126,12 @@ public class SceneSpawner : MonoBehaviour
 
         }
     }
-
+    void Finish()
+    {
+        if (destroyAfterBuild)
+        {
+            Destroy(this.gameObject);
+        }
+    }
 
 }
